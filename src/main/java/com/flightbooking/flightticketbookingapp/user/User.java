@@ -36,7 +36,7 @@ public class User implements UserDetails {
     )
     @GeneratedValue(
             strategy = SEQUENCE,
-            generator = "student_sequence"
+            generator = "user_sequence"
     )
     @Column(
             name = "id"
