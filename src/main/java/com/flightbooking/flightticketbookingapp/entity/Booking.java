@@ -50,4 +50,9 @@ public class Booking {
 
     )
     private Integer seatNumber;
+
+    @Column(
+            name = "status"
+    )
+    private Integer status;
 }
