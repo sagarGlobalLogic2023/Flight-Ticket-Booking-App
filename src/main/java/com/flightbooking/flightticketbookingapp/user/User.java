@@ -3,9 +3,11 @@ package com.flightbooking.flightticketbookingapp.user;
 import com.flightbooking.flightticketbookingapp.entity.Booking;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User implements UserDetails {
     @Id
     @SequenceGenerator(
@@ -74,9 +77,13 @@ public class User implements UserDetails {
     )
     private List<Booking> bookings = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
