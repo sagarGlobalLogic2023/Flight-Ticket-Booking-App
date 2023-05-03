@@ -1,5 +1,6 @@
 package com.flightbooking.flightticketbookingapp.entity;
 
+import com.flightbooking.flightticketbookingapp.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
