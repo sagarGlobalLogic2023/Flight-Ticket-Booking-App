@@ -1,5 +1,9 @@
-package com.flightbooking.flightticketbookingapp.auth;
+package com.flightbooking.flightticketbookingapp.controller;
 
+import com.flightbooking.flightticketbookingapp.auth.AuthenticationRequest;
+import com.flightbooking.flightticketbookingapp.auth.AuthenticationResponse;
+import com.flightbooking.flightticketbookingapp.service.AuthenticationService;
+import com.flightbooking.flightticketbookingapp.auth.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

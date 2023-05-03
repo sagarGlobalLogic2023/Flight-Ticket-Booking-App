@@ -1,5 +1,8 @@
-package com.flightbooking.flightticketbookingapp.auth;
+package com.flightbooking.flightticketbookingapp.service;
 
+import com.flightbooking.flightticketbookingapp.auth.AuthenticationRequest;
+import com.flightbooking.flightticketbookingapp.auth.AuthenticationResponse;
+import com.flightbooking.flightticketbookingapp.auth.RegisterRequest;
 import com.flightbooking.flightticketbookingapp.repository.UserRepository;
 import com.flightbooking.flightticketbookingapp.security.JwtService;
 import com.flightbooking.flightticketbookingapp.user.Role;
