@@ -88,5 +88,14 @@ public class Flight {
     )
     private LocalDateTime duration;
 
-
+    @ManyToOne
+    @JoinColumn(
+            name = "plane_id",
+            nullable = false,
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(
+                    name = "flight_user_fk"
+            )
+    )
+    private Plane plane;
 }
