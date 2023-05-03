@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,11 +54,39 @@ public class Flight {
     )
     private Integer availableSeats;
 
+    @Column(
+            name = "fare",
+            nullable = false
+
+    )
+    private Integer fare;
+
     @OneToMany(
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             mappedBy = "flight"
     )
     private List<Booking> bookings = new ArrayList<>();
+
+    @Column(
+            name = "departure_time",
+            nullable = false,
+            columnDefinition = "TIMESTAMP"
+    )
+    private LocalDateTime departureTime;
+
+    @Column(
+            name = "arrival_time",
+            nullable = false,
+            columnDefinition = "TIMESTAMP"
+    )
+    private LocalDateTime arrivalTime;
+
+    @Column(
+            name = "duration",
+            nullable = false,
+            columnDefinition = "TIMESTAMP"
+    )
+    private LocalDateTime duration;
 
 
 }

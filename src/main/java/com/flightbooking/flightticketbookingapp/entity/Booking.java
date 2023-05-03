@@ -42,4 +42,11 @@ public class Booking {
             columnDefinition = "TIMESTAMP"
     )
     private LocalDateTime createdAt;
+
+    @Column(
+            name = "seat_number",
+            nullable = false
+
+    )
+    private Integer seatNumber;
 }
