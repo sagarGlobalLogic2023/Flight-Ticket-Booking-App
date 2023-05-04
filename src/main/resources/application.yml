@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8085
 
 spring:
   datasource:
@@ -19,3 +19,8 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+
+  bezkoder:
+    openapi:
+      dev-url: http://localhost:8085
+      prod-url: https://bezkoder-api.com
