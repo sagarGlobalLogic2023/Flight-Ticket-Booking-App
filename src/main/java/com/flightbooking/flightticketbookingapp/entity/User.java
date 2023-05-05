@@ -1,5 +1,6 @@
 package com.flightbooking.flightticketbookingapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,9 +34,9 @@ public class User {
             generator = "student_sequence"
     )
     @Column(
-            name = "id"
+            name = "user_id"
     )
-    private Long id;
+    private Long userId;
 
     @Column(
             name = "first_name",
@@ -65,10 +66,28 @@ public class User {
     )
     private String password;
 
+    @Column(
+            name = "is_blocked",
+            nullable = false,
+            columnDefinition = "varchar(255) default 'No'"
+    )
+    private String isBlocked;
+    @Column(name = "Role",nullable = false,columnDefinition = "varchar(255) default 'user'")
+    private String role;
+
+    @JsonIgnore
     @OneToMany(
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             mappedBy = "user"
     )
     private List<Booking> bookings = new ArrayList<>();
 
+    public User(String firstName, String lastName, String email, String password, String isBlocked, String role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.isBlocked = isBlocked;
+        this.role = role;
+    }
 }

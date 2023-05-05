@@ -1,6 +1,9 @@
 package com.flightbooking.flightticketbookingapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +12,8 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "Plane")
 @Table(name = "plane")
+@NoArgsConstructor
+@Data
 public class Plane {
     @Id
     @SequenceGenerator(
@@ -21,11 +26,11 @@ public class Plane {
             generator = "plane_sequence"
     )
     @Column(
-            name = "id",
+            name = "plane_id",
             updatable = false
     )
-    private Long id;
-
+    private Long planeId;
+    @JsonIgnore
     @OneToMany(
             mappedBy = "plane",
             orphanRemoval = true,
@@ -53,4 +58,10 @@ public class Plane {
             columnDefinition = "TEXT"
     )
     private String status;
+
+    public Plane(Integer capacity, String airline, String status) {
+        this.capacity = capacity;
+        this.airline = airline;
+        this.status = status;
+    }
 }

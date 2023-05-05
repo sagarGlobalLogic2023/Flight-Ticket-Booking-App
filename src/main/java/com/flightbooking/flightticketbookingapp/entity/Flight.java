@@ -1,5 +1,6 @@
 package com.flightbooking.flightticketbookingapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,6 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Table(name = "flight")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Flight {
     @Id
     @SequenceGenerator(
@@ -28,10 +28,10 @@ public class Flight {
             generator = "flight_sequence"
     )
     @Column(
-            name = "id",
+            name = "flight_id",
             updatable = false
     )
-    private Long id;
+    private Long flightId;
 
     @Column(
             name = "source",
@@ -50,17 +50,16 @@ public class Flight {
     @Column(
             name = "available_seats",
             nullable = false
-
     )
     private Integer availableSeats;
 
     @Column(
             name = "fare",
             nullable = false
-
     )
     private Integer fare;
 
+    @JsonIgnore
     @OneToMany(
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             mappedBy = "flight"
@@ -68,34 +67,50 @@ public class Flight {
     private List<Booking> bookings = new ArrayList<>();
 
     @Column(
-            name = "departure_time",
+            name = "departure",
             nullable = false,
             columnDefinition = "TIMESTAMP"
     )
-    private LocalDateTime departureTime;
+    private LocalDateTime departure;
 
     @Column(
-            name = "arrival_time",
+            name = "arrival",
             nullable = false,
             columnDefinition = "TIMESTAMP"
     )
-    private LocalDateTime arrivalTime;
+    private LocalDateTime arrival;
 
     @Column(
-            name = "duration",
-            nullable = false,
-            columnDefinition = "TIMESTAMP"
+            name = "duration"
     )
-    private LocalDateTime duration;
+    private Long duration;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(
             name = "plane_id",
-            nullable = false,
-            referencedColumnName = "id",
+            referencedColumnName = "plane_id",
             foreignKey = @ForeignKey(
                     name = "flight_user_fk"
             )
     )
     private Plane plane;
+
+    @Column(
+            name = "status",
+            nullable = false
+    )
+    private String status;
+
+    public Flight(String source, String destination, Integer availableSeats, Integer fare, LocalDateTime departure, LocalDateTime arrival, Long duration, Plane plane, String status) {
+        this.source = source;
+        this.destination = destination;
+        this.availableSeats = availableSeats;
+        this.fare = fare;
+        this.departure = departure;
+        this.arrival = arrival;
+        this.duration = duration;
+        this.plane = plane;
+        this.status = status;
+    }
 }

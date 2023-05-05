@@ -1,5 +1,6 @@
 package com.flightbooking.flightticketbookingapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 public class Booking {
     @EmbeddedId
     private BookingId id;
-
+    @JsonIgnore
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(
@@ -25,7 +26,7 @@ public class Booking {
             )
     )
     private User user;
-
+    @JsonIgnore
     @ManyToOne
     @MapsId("flightId")
     @JoinColumn(
@@ -46,7 +47,6 @@ public class Booking {
     @Column(
             name = "seat_number",
             nullable = false
-
     )
     private Integer seatNumber;
 }
