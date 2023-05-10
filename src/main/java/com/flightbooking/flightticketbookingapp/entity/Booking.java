@@ -2,6 +2,7 @@ package com.flightbooking.flightticketbookingapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,11 +43,20 @@ public class Booking {
             nullable = false,
             columnDefinition = "TIMESTAMP"
     )
+    @NotNull
     private LocalDateTime createdAt;
 
     @Column(
             name = "seat_number",
             nullable = false
     )
+    @NotNull
     private Integer seatNumber;
+
+    @Column(
+            name = "booking_status",
+            nullable = false
+    )
+    @NotNull
+    private String status;
 }

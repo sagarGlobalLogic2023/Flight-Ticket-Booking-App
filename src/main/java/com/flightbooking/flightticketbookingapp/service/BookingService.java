@@ -1,13 +1,12 @@
 package com.flightbooking.flightticketbookingapp.service;
 
-import com.flightbooking.flightticketbookingapp.entity.Booking;
+import com.flightbooking.flightticketbookingapp.entity.*;
 
-import com.flightbooking.flightticketbookingapp.entity.Flight;
-import com.flightbooking.flightticketbookingapp.entity.Plane;
-import com.flightbooking.flightticketbookingapp.entity.User;
 import com.flightbooking.flightticketbookingapp.payload.BookFlightPayload;
 import com.flightbooking.flightticketbookingapp.repository.BookingRepo;
 
+import com.flightbooking.flightticketbookingapp.repository.FlightRepo;
+import com.flightbooking.flightticketbookingapp.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +25,11 @@ public class BookingService {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private FlightRepo flightRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
     public List<Booking> showBookings(User userId) {
 
@@ -42,15 +46,33 @@ public class BookingService {
 
 //        Optional<Booking> bookingId = bookingRepo.findById(bookFlightPayload.)
 
-        Booking booking = new Booking();
 
+        Booking booking = new Booking();
+        BookingId bookingId = new BookingId();
+        bookingId.setCreatedAt(LocalDateTime.now());
+        bookingId.setFlightId(bookFlightPayload.getFlightId());
+        bookingId.setUserId(bookFlightPayload.getUserId());
+        booking.setId(bookingId);
         booking.setFlight(flightService.getFlight(bookFlightPayload.getFlightId()));
         booking.setUser(userService.getUser(bookFlightPayload.getUserId()));
-        booking.setCreatedAt(bookFlightPayload.getCreatedAt());
+        booking.setCreatedAt(LocalDateTime.now());
         booking.setSeatNumber(bookFlightPayload.getSeatNumber());
+        booking.setStatus("Confirmed");
+
 
         bookingRepo.save(booking);
 
+    }
+    public void cancelBooking(User userId, Flight flightId){
+        Booking booking = new Booking();
+        Booking booking1= bookingRepo.findByUserAndFlight(userId,flightId);
+        booking.setId(booking1.getId());
+        booking.setStatus("Cancelled");
+        booking.setUser(booking1.getUser());
+        booking.setFlight(booking1.getFlight());
+        booking.setCreatedAt(booking1.getCreatedAt());
+        booking.setSeatNumber(booking1.getSeatNumber());
+        bookingRepo.save(booking);
     }
 
 }

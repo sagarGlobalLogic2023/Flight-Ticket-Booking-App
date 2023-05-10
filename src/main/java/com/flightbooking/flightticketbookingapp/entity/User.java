@@ -2,6 +2,7 @@ package com.flightbooking.flightticketbookingapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,6 +44,7 @@ public class User {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @NotNull
     private String firstName;
 
     @Column(
@@ -50,6 +52,7 @@ public class User {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @NotNull
     private String lastName;
 
     @Column(
@@ -57,6 +60,8 @@ public class User {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @Email
+    @NotNull
     private String email;
 
     @Column(
@@ -64,15 +69,19 @@ public class User {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @Min(8)
+    @Max(20)
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$")
     private String password;
-
     @Column(
             name = "is_blocked",
             nullable = false,
             columnDefinition = "varchar(255) default 'No'"
     )
+    @NotNull
     private String isBlocked;
     @Column(name = "Role",nullable = false,columnDefinition = "varchar(255) default 'user'")
+    @NotNull
     private String role;
 
     @JsonIgnore

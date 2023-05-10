@@ -2,6 +2,7 @@ package com.flightbooking.flightticketbookingapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -43,6 +44,7 @@ public class Plane {
             name = "capacity",
             nullable = false
     )
+    @NotNull
     private Integer capacity;
 
     @Column(
@@ -50,6 +52,7 @@ public class Plane {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @NotNull
     private String airline;
 
     @Column(
@@ -57,6 +60,7 @@ public class Plane {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @NotNull
     private String status;
 
     public Plane(Integer capacity, String airline, String status) {

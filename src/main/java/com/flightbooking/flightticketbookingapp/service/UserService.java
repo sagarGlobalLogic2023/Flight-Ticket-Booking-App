@@ -3,6 +3,7 @@ package com.flightbooking.flightticketbookingapp.service;
 import com.flightbooking.flightticketbookingapp.entity.Booking;
 import com.flightbooking.flightticketbookingapp.entity.Plane;
 import com.flightbooking.flightticketbookingapp.entity.User;
+import com.flightbooking.flightticketbookingapp.payload.UpdateProfilePayload;
 import com.flightbooking.flightticketbookingapp.payload.UpdateUserPayload;
 import com.flightbooking.flightticketbookingapp.repository.BookingRepo;
 import com.flightbooking.flightticketbookingapp.repository.UserRepo;
@@ -63,7 +64,22 @@ public class UserService {
     }
 
     public User getUser(Long userId) {
-        return userRepo.findById(userId).get();
+        return  userRepo.findById(userId).get();
+        //return userRepo.getUserById(userId);
+    }
+
+    public User updateProfile(UpdateProfilePayload updateProfilePayload){
+        User user= new User();
+        user.setUserId(updateProfilePayload.getUserId());
+        Optional<User> userObj= userRepo.findById(user.getUserId());
+        user.setEmail(updateProfilePayload.getEmail());
+        user.setPassword(updateProfilePayload.getPassword());
+        user.setFirstName(updateProfilePayload.getFirstName());
+        user.setLastName(updateProfilePayload.getLastName());
+        user.setIsBlocked(userObj.get().getIsBlocked());
+        user.setRole(userObj.get().getRole());
+        userRepo.save(user);
+        return userRepo.findById(user.getUserId()).get();
     }
 }
 

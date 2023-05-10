@@ -90,9 +90,9 @@ public class FlightService {
         return flights;
     }
 
-
     public Flight getFlight(Long flightId) {
-        return flightRepo.findById(flightId).get();
+        return  flightRepo.findById(flightId).get();
+        //return flightRepo.getFlightById(flightId);
     }
 }
 

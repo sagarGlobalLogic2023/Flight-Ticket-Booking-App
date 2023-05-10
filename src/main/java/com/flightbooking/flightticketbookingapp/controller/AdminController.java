@@ -10,8 +10,8 @@ import com.flightbooking.flightticketbookingapp.payload.UpdateUserPayload;
 import com.flightbooking.flightticketbookingapp.service.FlightService;
 import com.flightbooking.flightticketbookingapp.service.PlaneService;
 import com.flightbooking.flightticketbookingapp.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +21,9 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/admin")
 public class AdminController {
+
     @Autowired
     private FlightService flightService;
-
     @Autowired
     private PlaneService planeService;
 //    public AdminController(FlightService flightService) {
@@ -56,7 +56,7 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Status Changed Successfully");
     }
     @PostMapping("/add-plane")
-    public ResponseEntity<String> createPlane(@RequestBody Plane plane){
+    public ResponseEntity<String> createPlane(@RequestBody @Valid Plane plane){
         planeService.addPlane(plane);
         return  ResponseEntity.status(HttpStatus.CREATED).body("New Plane Added");
     }
