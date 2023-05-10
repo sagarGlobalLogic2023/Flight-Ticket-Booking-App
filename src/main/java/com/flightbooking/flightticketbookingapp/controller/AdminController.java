@@ -34,7 +34,7 @@ public class AdminController {
     private UserService userService;
 
     @PostMapping("/add-flight")
-    public ResponseEntity<String> createFlight(@RequestBody CreateFlightPayload createPayload){
+    public ResponseEntity<String> createFlight(@RequestBody @Valid CreateFlightPayload createPayload){
         flightService.createFlight(createPayload);
         return ResponseEntity.status(HttpStatus.CREATED).body("Flight Added Successfully");
     }
@@ -46,7 +46,7 @@ public class AdminController {
     }
 
     @PutMapping("/update-flight-details")
-    public ResponseEntity<String> updateFlight(@RequestBody UpdateFlightPayload updateFlight) {
+    public ResponseEntity<String> updateFlight(@RequestBody @Valid UpdateFlightPayload updateFlight) {
         flightService.updateFlight(updateFlight);
         return ResponseEntity.status(HttpStatus.CREATED).body("Flight details updated");
     }
@@ -61,7 +61,7 @@ public class AdminController {
         return  ResponseEntity.status(HttpStatus.CREATED).body("New Plane Added");
     }
     @PutMapping("/update-plane-details")
-    public ResponseEntity<String> updatePlane(@RequestBody UpdatePlanePayload updatePlanePayload) {
+    public ResponseEntity<String> updatePlane(@RequestBody @Valid UpdatePlanePayload updatePlanePayload) {
         planeService.updatePlane(updatePlanePayload);
         return ResponseEntity.status(HttpStatus.CREATED).body("Plane details updated");
     }
@@ -78,7 +78,7 @@ public class AdminController {
     }
 
     @PutMapping("/update-user-details")
-    public ResponseEntity<String> updateUser(@RequestBody UpdateUserPayload updateUserPayload) {
+    public ResponseEntity<String> updateUser(@RequestBody @Valid UpdateUserPayload updateUserPayload) {
           String updateStatus=  userService.updateUser(updateUserPayload);
           if(updateStatus.equals("User details updated")) {
               return ResponseEntity.status(HttpStatus.CREATED).body(updateStatus);

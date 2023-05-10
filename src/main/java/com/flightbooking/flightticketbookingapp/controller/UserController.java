@@ -9,6 +9,7 @@ import com.flightbooking.flightticketbookingapp.payload.UpdateUserPayload;
 import com.flightbooking.flightticketbookingapp.service.FlightService;
 import com.flightbooking.flightticketbookingapp.service.BookingService;
 import com.flightbooking.flightticketbookingapp.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/show-bookings")
-    public ResponseEntity<List<Booking>> showBookings(User userId){
+    public ResponseEntity<List<Booking>> showBookings( User userId){
 //        List<Booking> bookings= bookingService.showBookings(userId);
 
         List<Booking> bookings = bookingService.showBookings(userId);
@@ -52,13 +53,13 @@ public class UserController {
     }
 
     @PostMapping("/book-flight")
-    public ResponseEntity<String> bookFlight(@RequestBody BookFlightPayload bookFlightPayload) {
+    public ResponseEntity<String> bookFlight(@RequestBody @Valid BookFlightPayload bookFlightPayload) {
         bookingService.bookFlight(bookFlightPayload);
         return ResponseEntity.status(HttpStatus.CREATED).body("Booking Done");
     }
 
     @PutMapping("update-user-profile")
-    public ResponseEntity<String> updateUser(@RequestBody UpdateProfilePayload updateProfilePayload){
+    public ResponseEntity<String> updateUser(@RequestBody @Valid UpdateProfilePayload updateProfilePayload){
         User user= userService.updateProfile(updateProfilePayload);
         if(user!=null) {
             return ResponseEntity.status(HttpStatus.CREATED).body("Profile updated successfully");
