@@ -46,7 +46,6 @@ public class Plane {
             name = "capacity",
             nullable = false
     )
-    @NotNull
     private Integer capacity;
 
     @Column(
@@ -54,9 +53,6 @@ public class Plane {
             nullable = false,
             columnDefinition = "TEXT"
     )
-    @NotNull
-    @NotEmpty
-    @NotBlank
     private String airline;
 
     @Column(
@@ -64,9 +60,6 @@ public class Plane {
             nullable = false,
             columnDefinition = "TEXT"
     )
-    @NotNull
-    @NotEmpty
-    @NotBlank
     private String status;
 
     public Plane(Integer capacity, String airline, String status) {

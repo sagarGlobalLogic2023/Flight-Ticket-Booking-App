@@ -3,10 +3,7 @@ package com.flightbooking.flightticketbookingapp.controller;
 import com.flightbooking.flightticketbookingapp.entity.Flight;
 import com.flightbooking.flightticketbookingapp.entity.Plane;
 import com.flightbooking.flightticketbookingapp.entity.User;
-import com.flightbooking.flightticketbookingapp.payload.CreateFlightPayload;
-import com.flightbooking.flightticketbookingapp.payload.UpdateFlightPayload;
-import com.flightbooking.flightticketbookingapp.payload.UpdatePlanePayload;
-import com.flightbooking.flightticketbookingapp.payload.UpdateUserPayload;
+import com.flightbooking.flightticketbookingapp.payload.*;
 import com.flightbooking.flightticketbookingapp.service.FlightService;
 import com.flightbooking.flightticketbookingapp.service.PlaneService;
 import com.flightbooking.flightticketbookingapp.service.UserService;
@@ -56,8 +53,8 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Status Changed Successfully");
     }
     @PostMapping("/add-plane")
-    public ResponseEntity<String> createPlane(@RequestBody @Valid Plane plane){
-        planeService.addPlane(plane);
+    public ResponseEntity<String> createPlane(@RequestBody @Valid CreatePlanePayload createPlanePayload){
+        planeService.addPlane(createPlanePayload);
         return  ResponseEntity.status(HttpStatus.CREATED).body("New Plane Added");
     }
     @PutMapping("/update-plane-details")

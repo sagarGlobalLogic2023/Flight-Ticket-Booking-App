@@ -1,6 +1,7 @@
 package com.flightbooking.flightticketbookingapp.service;
 
 import com.flightbooking.flightticketbookingapp.entity.Plane;
+import com.flightbooking.flightticketbookingapp.payload.CreatePlanePayload;
 import com.flightbooking.flightticketbookingapp.payload.UpdateFlightPayload;
 import com.flightbooking.flightticketbookingapp.payload.UpdatePlanePayload;
 import com.flightbooking.flightticketbookingapp.payload.UpdateUserPayload;
@@ -15,11 +16,15 @@ public class PlaneService {
     @Autowired
     private PlaneRepo planeRepo;
 
-    public void addPlane(Plane plane){
-        planeRepo.save(plane);
+    public Plane addPlane(CreatePlanePayload createPlanePayload){
+        Plane plane= new Plane();
+        plane.setCapacity(createPlanePayload.getCapacity());
+        plane.setStatus(createPlanePayload.getStatus());
+        plane.setAirline(createPlanePayload.getAirline());
+       return planeRepo.save(plane);
     }
 
-    public void updatePlane(UpdatePlanePayload updatePlanePayload){
+    public Plane updatePlane(UpdatePlanePayload updatePlanePayload){
         Plane plane = new Plane();
 
         Optional<Plane> updatedPlane = planeRepo.findById(updatePlanePayload.getPlaneId());
@@ -33,9 +38,11 @@ public class PlaneService {
         plane.setAirline(updatePlanePayload.getAirline());
         plane.setStatus(updatePlanePayload.getStatus());
         planeRepo.save(plane);
+        return  plane;
     }
     public void setNewPlaneStatus(String status, Long id){
         planeRepo.changePlaneStatus(status, id);
+        
     }
 
 }
