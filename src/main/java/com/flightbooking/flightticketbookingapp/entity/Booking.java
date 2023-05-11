@@ -1,7 +1,11 @@
 package com.flightbooking.flightticketbookingapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flightbooking.flightticketbookingapp.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +20,7 @@ import java.time.LocalDateTime;
 public class Booking {
     @EmbeddedId
     private BookingId id;
-
+    @JsonIgnore
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(
@@ -26,7 +30,7 @@ public class Booking {
             )
     )
     private User user;
-
+    @JsonIgnore
     @ManyToOne
     @MapsId("flightId")
     @JoinColumn(
@@ -47,12 +51,12 @@ public class Booking {
     @Column(
             name = "seat_number",
             nullable = false
-
     )
     private Integer seatNumber;
 
     @Column(
-            name = "status"
+            name = "booking_status",
+            nullable = false
     )
-    private Integer status;
+    private String status;
 }

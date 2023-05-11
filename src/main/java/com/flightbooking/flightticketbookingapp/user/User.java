@@ -2,6 +2,8 @@ package com.flightbooking.flightticketbookingapp.user;
 
 import com.flightbooking.flightticketbookingapp.entity.Booking;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,15 +41,16 @@ public class User implements UserDetails {
             generator = "user_sequence"
     )
     @Column(
-            name = "id"
+            name = "user_id"
     )
-    private Long id;
+    private Long userId;
 
     @Column(
             name = "first_name",
             nullable = false,
             columnDefinition = "TEXT"
     )
+
     private String firstName;
 
     @Column(
@@ -55,6 +58,7 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
+
     private String lastName;
 
     @Column(
@@ -62,6 +66,7 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
+
     private String email;
 
     @Column(
@@ -69,8 +74,16 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
-    private String password;
 
+    private String password;
+    @Column(
+            name = "is_blocked",
+            nullable = false,
+            columnDefinition = "varchar(255) default 'No'"
+    )
+    private String isBlocked;
+
+    @JsonIgnore
     @OneToMany(
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             mappedBy = "user"
