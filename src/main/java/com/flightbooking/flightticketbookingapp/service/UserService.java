@@ -2,11 +2,11 @@ package com.flightbooking.flightticketbookingapp.service;
 
 import com.flightbooking.flightticketbookingapp.entity.Booking;
 import com.flightbooking.flightticketbookingapp.entity.Plane;
-import com.flightbooking.flightticketbookingapp.entity.User;
 import com.flightbooking.flightticketbookingapp.payload.UpdateProfilePayload;
 import com.flightbooking.flightticketbookingapp.payload.UpdateUserPayload;
 import com.flightbooking.flightticketbookingapp.repository.BookingRepo;
 import com.flightbooking.flightticketbookingapp.repository.UserRepo;
+import com.flightbooking.flightticketbookingapp.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +47,7 @@ public class UserService {
     }
     public List<User> listAllUsers() {
 
-        List<User> allUsers= userRepo.findByRole("user");
+        List<User> allUsers= userRepo.findAll();
         return allUsers;
 
     }

@@ -2,13 +2,13 @@ package com.flightbooking.flightticketbookingapp.controller;
 
 import com.flightbooking.flightticketbookingapp.entity.Booking;
 import com.flightbooking.flightticketbookingapp.entity.Flight;
-import com.flightbooking.flightticketbookingapp.entity.User;
 import com.flightbooking.flightticketbookingapp.payload.BookFlightPayload;
 import com.flightbooking.flightticketbookingapp.payload.UpdateProfilePayload;
 import com.flightbooking.flightticketbookingapp.payload.UpdateUserPayload;
 import com.flightbooking.flightticketbookingapp.service.FlightService;
 import com.flightbooking.flightticketbookingapp.service.BookingService;
 import com.flightbooking.flightticketbookingapp.service.UserService;
+import com.flightbooking.flightticketbookingapp.user.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

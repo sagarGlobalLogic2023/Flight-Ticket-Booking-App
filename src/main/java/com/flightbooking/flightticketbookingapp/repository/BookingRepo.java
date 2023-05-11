@@ -3,7 +3,7 @@ package com.flightbooking.flightticketbookingapp.repository;
 import com.flightbooking.flightticketbookingapp.entity.Booking;
 import com.flightbooking.flightticketbookingapp.entity.BookingId;
 import com.flightbooking.flightticketbookingapp.entity.Flight;
-import com.flightbooking.flightticketbookingapp.entity.User;
+import com.flightbooking.flightticketbookingapp.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

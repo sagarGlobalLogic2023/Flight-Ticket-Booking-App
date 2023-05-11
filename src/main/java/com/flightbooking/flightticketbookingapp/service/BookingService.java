@@ -7,6 +7,7 @@ import com.flightbooking.flightticketbookingapp.repository.BookingRepo;
 
 import com.flightbooking.flightticketbookingapp.repository.FlightRepo;
 import com.flightbooking.flightticketbookingapp.repository.UserRepo;
+import com.flightbooking.flightticketbookingapp.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,6 @@ package com.flightbooking.flightticketbookingapp.service;
 
 import com.flightbooking.flightticketbookingapp.entity.Flight;
 import com.flightbooking.flightticketbookingapp.entity.Plane;
-import com.flightbooking.flightticketbookingapp.entity.User;
 import com.flightbooking.flightticketbookingapp.payload.CreateFlightPayload;
 import com.flightbooking.flightticketbookingapp.payload.UpdateFlightPayload;
 import com.flightbooking.flightticketbookingapp.repository.FlightRepo;

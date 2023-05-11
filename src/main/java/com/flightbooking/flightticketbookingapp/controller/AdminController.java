@@ -2,21 +2,23 @@ package com.flightbooking.flightticketbookingapp.controller;
 
 import com.flightbooking.flightticketbookingapp.entity.Flight;
 import com.flightbooking.flightticketbookingapp.entity.Plane;
-import com.flightbooking.flightticketbookingapp.entity.User;
 import com.flightbooking.flightticketbookingapp.payload.*;
 import com.flightbooking.flightticketbookingapp.service.FlightService;
 import com.flightbooking.flightticketbookingapp.service.PlaneService;
 import com.flightbooking.flightticketbookingapp.service.UserService;
+import com.flightbooking.flightticketbookingapp.user.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/admin")
+@RequestMapping("/api/v1/admin")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AdminController {
 
     @Autowired
@@ -53,6 +55,7 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Status Changed Successfully");
     }
     @PostMapping("/add-plane")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> createPlane(@RequestBody @Valid CreatePlanePayload createPlanePayload){
         planeService.addPlane(createPlanePayload);
         return  ResponseEntity.status(HttpStatus.CREATED).body("New Plane Added");
@@ -68,6 +71,7 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Status Changed Successfully");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/view-all-users")
     public ResponseEntity<List<User>> seeAllUsers(){
         List<User> users= userService.listAllUsers();

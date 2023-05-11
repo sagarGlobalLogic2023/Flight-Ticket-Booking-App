@@ -1,5 +1,6 @@
 package com.flightbooking.flightticketbookingapp.payload;
 
+import com.flightbooking.flightticketbookingapp.user.Role;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -34,5 +35,5 @@ public class UpdateUserPayload {
     @NotNull
     @NotEmpty
     @NotBlank
-    private String role;
+    private Role role;
 }

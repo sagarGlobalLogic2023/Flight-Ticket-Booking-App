@@ -1,7 +1,6 @@
 package com.flightbooking.flightticketbookingapp.payload;
 
 import com.flightbooking.flightticketbookingapp.entity.Flight;
-import com.flightbooking.flightticketbookingapp.entity.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
