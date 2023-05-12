@@ -1,7 +1,8 @@
 package com.flightbooking.flightticketbookingapp.mockEntity;
 
 import com.flightbooking.flightticketbookingapp.entity.Booking;
-import com.flightbooking.flightticketbookingapp.entity.User;
+import com.flightbooking.flightticketbookingapp.user.Role;
+import com.flightbooking.flightticketbookingapp.user.User;
 import com.flightbooking.flightticketbookingapp.request.UserRequest;
 import com.flightbooking.flightticketbookingapp.response.UserResponse;
 
@@ -40,7 +41,8 @@ public class MockUserObject {
         user.setEmail("ad@gov.in");
         user.setPassword("1234");
         user.setIsBlocked("No");
-        user.setRole("Admin");
+        //user.setRole("Admin");
+        user.setRole(Role.ROLE_ADMIN);
         user.setBookings(bookings);
 
         return user;
@@ -58,8 +60,9 @@ public class MockUserObject {
         userResponse.setEmail(getUser().getEmail());
         userResponse.setPassword(getUser().getPassword());
         userResponse.setIsBlocked(getUser().getIsBlocked());
+        //userResponse.setRole(getUser().getRole());
         userResponse.setRole(getUser().getRole());
-      //  userResponse.setBookings(getUser().getBookings());
+        //userResponse.setBookings(getUser().getBookings());
 
         return userResponse;
 

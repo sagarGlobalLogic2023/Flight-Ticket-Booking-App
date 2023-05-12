@@ -1,6 +1,7 @@
 package com.flightbooking.flightticketbookingapp.response;
 
 import com.flightbooking.flightticketbookingapp.entity.Booking;
+import com.flightbooking.flightticketbookingapp.user.Role;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -14,5 +15,5 @@ public class UserResponse {
     private String email;
     private String password;
     private String isBlocked;
-    private String role;
+    private Role role;
 }
