@@ -50,7 +50,6 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
-
     private String firstName;
 
     @Column(
@@ -66,7 +65,6 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
-
     private String email;
 
     @Column(
@@ -74,8 +72,8 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
-
     private String password;
+
     @Column(
             name = "is_blocked",
             nullable = false,

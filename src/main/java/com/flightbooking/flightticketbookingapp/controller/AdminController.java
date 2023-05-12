@@ -32,39 +32,49 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/add-flight")
     public ResponseEntity<String> createFlight(@RequestBody @Valid CreateFlightPayload createPayload){
         flightService.createFlight(createPayload);
         return ResponseEntity.status(HttpStatus.CREATED).body("Flight Added Successfully");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/view-all-flights")
     public ResponseEntity<List<Flight>> seeAllFlights(){
         List<Flight> flights= flightService.listAllFlights();
         return ResponseEntity.status(HttpStatus.CREATED).body(flights);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/update-flight-details")
     public ResponseEntity<String> updateFlight(@RequestBody @Valid UpdateFlightPayload updateFlight) {
         flightService.updateFlight(updateFlight);
         return ResponseEntity.status(HttpStatus.CREATED).body("Flight details updated");
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/change-flight-status")
     public ResponseEntity<String> changeFlightStatus( String status, Long id){
         flightService.setNewFlightStatus(status, id);
         return ResponseEntity.status(HttpStatus.CREATED).body("Status Changed Successfully");
     }
-    @PostMapping("/add-plane")
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/add-plane")
     public ResponseEntity<String> createPlane(@RequestBody @Valid CreatePlanePayload createPlanePayload){
         planeService.addPlane(createPlanePayload);
         return  ResponseEntity.status(HttpStatus.CREATED).body("New Plane Added");
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/update-plane-details")
     public ResponseEntity<String> updatePlane(@RequestBody @Valid UpdatePlanePayload updatePlanePayload) {
         planeService.updatePlane(updatePlanePayload);
         return ResponseEntity.status(HttpStatus.CREATED).body("Plane details updated");
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/change-plane-status")
     public ResponseEntity<String> changePlaneStatus( String status, Long id){
         planeService.setNewPlaneStatus(status, id);
@@ -78,6 +88,7 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body(users);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/update-user-details")
     public ResponseEntity<String> updateUser(@RequestBody @Valid UpdateUserPayload updateUserPayload) {
           String updateStatus=  userService.updateUser(updateUserPayload);
@@ -87,6 +98,7 @@ public class AdminController {
           return ResponseEntity.status(HttpStatus.FORBIDDEN).body(updateStatus);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/block-user")
     public ResponseEntity<String> blockUser( String status, Long id){
        String blockStatus =userService.blockUser(status, id);
@@ -100,7 +112,5 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(blockStatus);
 
     }
-
-
 
 }

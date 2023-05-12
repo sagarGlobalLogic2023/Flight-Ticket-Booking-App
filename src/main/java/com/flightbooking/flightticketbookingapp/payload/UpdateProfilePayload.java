@@ -1,9 +1,12 @@
 package com.flightbooking.flightticketbookingapp.payload;
 
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
 public class UpdateProfilePayload {
 
     @NotNull

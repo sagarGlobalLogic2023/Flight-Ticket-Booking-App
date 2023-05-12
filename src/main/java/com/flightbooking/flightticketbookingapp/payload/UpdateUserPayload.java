@@ -2,9 +2,11 @@ package com.flightbooking.flightticketbookingapp.payload;
 
 import com.flightbooking.flightticketbookingapp.user.Role;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
+@AllArgsConstructor
 @Data
 public class UpdateUserPayload {
 

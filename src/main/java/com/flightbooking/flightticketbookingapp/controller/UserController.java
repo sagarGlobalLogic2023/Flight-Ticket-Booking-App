@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,12 +31,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/search-flights")
     public ResponseEntity<List<Flight>> searchFlights(String source, String destination){
         List<Flight> flights= flightService.SearchFlights(source, destination);
         return ResponseEntity.status(HttpStatus.CREATED).body(flights);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/show-bookings")
     public ResponseEntity<List<Booking>> showBookings( User userId){
 //        List<Booking> bookings= bookingService.showBookings(userId);
@@ -45,6 +48,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookings);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/get-booking")
     public ResponseEntity<Flight> getBooking(User userId, Flight flightId){
         Booking booking= bookingService.getBook(userId,flightId);
@@ -52,12 +56,14 @@ public class UserController {
        return ResponseEntity.status(HttpStatus.CREATED).body((flight));
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/book-flight")
     public ResponseEntity<String> bookFlight(@RequestBody @Valid BookFlightPayload bookFlightPayload) {
         bookingService.bookFlight(bookFlightPayload);
         return ResponseEntity.status(HttpStatus.CREATED).body("Booking Done");
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("update-user-profile")
     public ResponseEntity<String> updateUser(@RequestBody @Valid UpdateProfilePayload updateProfilePayload){
         User user= userService.updateProfile(updateProfilePayload);
@@ -67,12 +73,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Error Updating Profile");
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("cancel-booking")
     public ResponseEntity<String> cancelBooking(User userId, Flight flightId){
         bookingService.cancelBooking(userId,flightId);
         return ResponseEntity.status(HttpStatus.CREATED).body("Booked Flight Cancelled Successfully");
     }
-
-
 
 }

@@ -1,6 +1,7 @@
 package com.flightbooking.flightticketbookingapp.service;
 
 import com.flightbooking.flightticketbookingapp.entity.Plane;
+import com.flightbooking.flightticketbookingapp.payload.CreatePlanePayload;
 import com.flightbooking.flightticketbookingapp.payload.UpdatePlanePayload;
 import com.flightbooking.flightticketbookingapp.repository.PlaneRepo;
 import org.junit.jupiter.api.AfterEach;
@@ -34,18 +35,27 @@ class PlaneServiceTest {
     @Test
     void addPlane() {
         Plane plane= new Plane(30,"Harsh","Working");
+
+        CreatePlanePayload planePayload = new CreatePlanePayload(30, "Harsh", "Working");
+
+        plane.setCapacity(planePayload.getCapacity());
+        plane.setAirline(planePayload.getAirline());
+        plane.setStatus(plane.getStatus());
+
         Mockito.when(planeRepo.save(plane)).thenReturn(plane);
-        assertEquals(plane,planeService.addPlane(plane));
+        assertEquals(plane,planeService.addPlane(planePayload));
     }
-    void InvalidaddPlane() {
-        Plane plane= new Plane(30,"Harsh","Working");
-        Mockito.when(planeRepo.save(plane)).thenReturn(plane);
-        assertEquals(plane,planeService.addPlane(plane));
-    }
+
+//    void InvalidaddPlane() {
+//        Plane plane= new Plane(30,"Harsh","Working");
+//        Mockito.when(planeRepo.save(plane)).thenReturn(plane);
+//        assertEquals(plane,planeService.addPlane(plane));
+//    }
+
     @Test
     void updatePlane() {
 
-        Plane oldPlane = new Plane(50, "AirIndia","Not Wroking");
+        Plane oldPlane = new Plane(50, "AirIndia","Not Working");
 
         UpdatePlanePayload updatedPlanePayload = new UpdatePlanePayload(1L, 40, "Akasa", "Working");
 
