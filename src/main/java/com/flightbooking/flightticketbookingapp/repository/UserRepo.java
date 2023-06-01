@@ -22,6 +22,8 @@ public interface UserRepo extends JpaRepository<User,Long> {
     public void changeUserStatus(@Param("n") String status, @Param("u") Long id);
 
     public List<User> findByRole(String role);
+    public User findByEmail(String email);
+
 
 
 }

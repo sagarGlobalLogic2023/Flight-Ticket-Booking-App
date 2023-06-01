@@ -8,15 +8,11 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CreatePlanePayload {
+public class BlockUserPayload {
     @NotNull
-    private Integer capacity;
-    @NotBlank
     @NotEmpty
-    @NotNull
-    private String airline;
-    @NotNull
     @NotBlank
-    @NotEmpty
     private String status;
+    @NotNull
+    private Long id;
 }

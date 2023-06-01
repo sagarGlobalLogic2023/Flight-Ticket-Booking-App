@@ -1,10 +1,7 @@
 package com.flightbooking.flightticketbookingapp.service;
 
 import com.flightbooking.flightticketbookingapp.entity.Plane;
-import com.flightbooking.flightticketbookingapp.payload.CreatePlanePayload;
-import com.flightbooking.flightticketbookingapp.payload.UpdateFlightPayload;
-import com.flightbooking.flightticketbookingapp.payload.UpdatePlanePayload;
-import com.flightbooking.flightticketbookingapp.payload.UpdateUserPayload;
+import com.flightbooking.flightticketbookingapp.payload.*;
 import com.flightbooking.flightticketbookingapp.repository.PlaneRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,25 +21,29 @@ public class PlaneService {
        return planeRepo.save(plane);
     }
 
-    public Plane updatePlane(UpdatePlanePayload updatePlanePayload){
+    public String updatePlane(UpdatePlanePayload updatePlanePayload) {
         Plane plane = new Plane();
 
         Optional<Plane> updatedPlane = planeRepo.findById(updatePlanePayload.getPlaneId());
-
-        if(updatedPlane.isPresent()) {
-            Long planeId = updatedPlane.get().getPlaneId();
-            plane.setPlaneId(planeId);
+        if (updatedPlane.isPresent()) {
+            plane.setPlaneId(updatedPlane.get().getPlaneId());
+            plane.setCapacity(updatePlanePayload.getCapacity());
+            plane.setAirline(updatePlanePayload.getAirline());
+            plane.setStatus(updatePlanePayload.getStatus());
+            planeRepo.save(plane);
+            return "Plane details updated";
+        } else {
+            return "Plane Not found";
         }
-        //updatedPlane.ifPresent(value -> plane.setPlaneId(value.getPlaneId()));
-        plane.setCapacity(updatePlanePayload.getCapacity());
-        plane.setAirline(updatePlanePayload.getAirline());
-        plane.setStatus(updatePlanePayload.getStatus());
-        planeRepo.save(plane);
-        return  plane;
     }
-    public void setNewPlaneStatus(String status, Long id){
+    public String setNewPlaneStatus(String status, Long id){
+        Optional<Plane>plane= planeRepo.findById(id);
+        if(plane.isPresent()){
         planeRepo.changePlaneStatus(status, id);
-        
+        return "Status Changed Successfully";
     }
-
+        else {
+            return "Plane Not Found";
+        }
+}
 }

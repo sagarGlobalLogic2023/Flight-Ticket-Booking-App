@@ -12,22 +12,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class FlightService {
-//    private FlightRepository flightRepository;
-//
-//    @Autowired
-//    public FlightService(FlightRepository flightRepository) {
-//        this.flightRepository = flightRepository;
-//    }
-//
-//    public Flight addFlight(CreateFlight createFlight) {
-//        //createFlight.g
-//        return null;
-//    }
     @Autowired
     private FlightRepo flightRepo;
     @Autowired
@@ -36,8 +26,8 @@ public class FlightService {
     @Autowired
     private UserRepo userRepo;
 
-    public void createFlight(CreateFlightPayload payload){
-        Optional<Plane> planeId = planeRepo.findById(payload.getPlaneId());
+    public String createFlight(CreateFlightPayload payload){
+        Optional<Plane> plane = planeRepo.findById(payload.getPlaneId());
         Flight flight = new Flight();
         flight.setArrival(LocalDateTime.parse(payload.getArrival()));
         flight.setDeparture(LocalDateTime.parse(payload.getDeparture()));
@@ -46,47 +36,77 @@ public class FlightService {
         flight.setDestination(payload.getDestination());
         flight.setSource(payload.getSource());
         flight.setStatus("Confirmed");
-        Long hours = ChronoUnit.HOURS.between(LocalDateTime.parse(payload.getDeparture()), LocalDateTime.parse(payload.getArrival()));
-        flight.setDuration(hours);
-        planeId.ifPresent(flight::setPlane);
-        flightRepo.save(flight);
+        Long minutes = ChronoUnit.MINUTES.between(LocalDateTime.parse(payload.getDeparture()), LocalDateTime.parse(payload.getArrival()));
+        flight.setDuration(minutes);
+        if(plane.isPresent()){
+            flight.setPlane(plane.get());
+            flightRepo.save(flight);
+            return "Flight Added Successfully";
+        }
+        else {
+            return "Plane not found";
+        }
+       // planeId.ifPresent(flight::setPlane);
+
     }
     public List<Flight> listAllFlights(){
       List<Flight> allFlights= flightRepo.findAll();
-      return allFlights;
+      List<Flight> confirmedFlights= new ArrayList<>();
+        for (Flight allFlight : allFlights) {
+            if (allFlight.getStatus().equals("Confirmed"))
+                confirmedFlights.add(allFlight);
+        }
+      return confirmedFlights;
     }
 
-    public void updateFlight(UpdateFlightPayload updatePayload) {
+    public String updateFlight(UpdateFlightPayload updatePayload) {
         Optional<Plane> planeId = planeRepo.findById(updatePayload.getPlaneId());
-        Optional<Flight> flightId = flightRepo.findById(updatePayload.getFlightId());
-
-        Long oldFlightId = flightId.get().getFlightId();
-
+        Optional<Flight> flight1 = flightRepo.findById(updatePayload.getFlightId());
         Flight flight = new Flight();
-//        flightId.ifPresent(value -> flight.setFlightId(value.getFlightId()));
-        flight.setFlightId(oldFlightId);
-        flight.setArrival(LocalDateTime.parse(updatePayload.getArrival()));
-        flight.setDeparture(LocalDateTime.parse(updatePayload.getDeparture()));
-        flight.setFare(updatePayload.getFare());
-        flight.setAvailableSeats(updatePayload.getAvailableSeats());
-        flight.setDestination(updatePayload.getDestination());
-        flight.setSource(updatePayload.getSource());
-        flight.setStatus(updatePayload.getStatus());
-        Long hours = ChronoUnit.HOURS.between(LocalDateTime.parse(updatePayload.getDeparture()), LocalDateTime.parse(updatePayload.getArrival()));
-        flight.setDuration(hours);
-        planeId.ifPresent(flight::setPlane);
-        flightRepo.save(flight);
-
+        if(flight1.isPresent()) {
+            Long oldFlightId = flight1.get().getFlightId();
+            flight.setFlightId(oldFlightId);
+            flight.setArrival(LocalDateTime.parse(updatePayload.getArrival()));
+            flight.setDeparture(LocalDateTime.parse(updatePayload.getDeparture()));
+            flight.setFare(updatePayload.getFare());
+            flight.setAvailableSeats(updatePayload.getAvailableSeats());
+            flight.setDestination(updatePayload.getDestination());
+            flight.setSource(updatePayload.getSource());
+            flight.setStatus(updatePayload.getStatus());
+            Long minutes = ChronoUnit.MINUTES.between(LocalDateTime.parse(updatePayload.getDeparture()), LocalDateTime.parse(updatePayload.getArrival()));
+            flight.setDuration(minutes);
+            if(planeId.isPresent()) {
+                flight.setPlane(planeId.get());
+                flightRepo.save(flight);
+                return "Flight details updated";
+            }
+            return "Plane not found";
+        }
+        else{
+            return "Flight not found";
+        }
     }
 
 
-    public void setNewFlightStatus(String status, Long id){
-        flightRepo.changeFlightStatus(status, id);
+    public String setNewFlightStatus(String status, Long id){
+        Optional<Flight> flight= flightRepo.findById(id);
+        if(flight.isPresent()) {
+            flightRepo.changeFlightStatus(status, id);
+            return "Status Changed Successfully";
+        }
+        else {
+            return "Flight Not found";
+        }
     }
 
     public List<Flight> SearchFlights(String source, String destination) {
         List<Flight> flights = flightRepo.findAllBySourceAndDestination(source, destination);
-        return flights;
+        List<Flight> confirmedFlights= new ArrayList<>();
+        for (Flight flight : flights) {
+            if (flight.getStatus().equals("Confirmed"))
+                confirmedFlights.add(flight);
+        }
+        return confirmedFlights;
     }
 
     public Flight getFlight(Long flightId) {

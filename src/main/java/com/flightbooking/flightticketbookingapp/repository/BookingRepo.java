@@ -21,4 +21,6 @@ public interface BookingRepo extends JpaRepository<Booking, BookingId> {
 
 
     Booking findByUserAndFlight(User userId, Flight flightId);
+
+    List<Booking> findAllByUserAndFlight(User userId, Flight flightId);
 }

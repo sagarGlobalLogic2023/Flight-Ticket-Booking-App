@@ -37,5 +37,5 @@ public class UpdateUserPayload {
     @NotNull
     @NotEmpty
     @NotBlank
-    private Role role;
+    private String role;
 }

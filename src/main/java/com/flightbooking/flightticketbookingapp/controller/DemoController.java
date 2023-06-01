@@ -29,7 +29,7 @@ public class DemoController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<User>> seeAllUsers(){
         List<User> users= userService.listAllUsers();
-        return ResponseEntity.status(HttpStatus.CREATED).body(users);
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
 }

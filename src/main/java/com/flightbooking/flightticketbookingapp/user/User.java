@@ -50,6 +50,9 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String firstName;
 
     @Column(
@@ -57,7 +60,9 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
-
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String lastName;
 
     @Column(
@@ -65,6 +70,9 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String email;
 
     @Column(
@@ -72,6 +80,9 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String password;
 
     @Column(
@@ -79,6 +90,9 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "varchar(255) default 'No'"
     )
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private String isBlocked;
 
     @JsonIgnore
@@ -89,7 +103,10 @@ public class User implements UserDetails {
     private List<Booking> bookings = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Role role;
+
+
 
 
     @Override

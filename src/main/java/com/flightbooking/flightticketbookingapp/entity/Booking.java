@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static jakarta.persistence.GenerationType.SEQUENCE;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

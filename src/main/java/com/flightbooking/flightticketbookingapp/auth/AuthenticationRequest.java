@@ -1,5 +1,6 @@
 package com.flightbooking.flightticketbookingapp.auth;
 
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationRequest {
+
     private String email;
+
     private String password;
 }

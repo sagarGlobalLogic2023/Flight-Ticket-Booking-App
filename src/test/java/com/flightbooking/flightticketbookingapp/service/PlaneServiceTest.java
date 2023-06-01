@@ -1,6 +1,7 @@
 package com.flightbooking.flightticketbookingapp.service;
 
 import com.flightbooking.flightticketbookingapp.entity.Plane;
+import com.flightbooking.flightticketbookingapp.payload.ChangePlaneStatusPayload;
 import com.flightbooking.flightticketbookingapp.payload.CreatePlanePayload;
 import com.flightbooking.flightticketbookingapp.payload.UpdatePlanePayload;
 import com.flightbooking.flightticketbookingapp.repository.PlaneRepo;
@@ -16,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
@@ -30,57 +33,75 @@ class PlaneServiceTest {
 
     @Autowired
     private PlaneService planeService;
-    @Mock
+    @MockBean
     private PlaneRepo planeRepo;
     @Test
     void addPlane() {
-        Plane plane= new Plane(30,"Harsh","Working");
-
-        CreatePlanePayload planePayload = new CreatePlanePayload(30, "Harsh", "Working");
-
-        plane.setCapacity(planePayload.getCapacity());
-        plane.setAirline(planePayload.getAirline());
-        plane.setStatus(plane.getStatus());
-
+        CreatePlanePayload createPlanePayload= new CreatePlanePayload(30,"Indica","Working");
+        Plane plane= new Plane();
+        plane.setCapacity(createPlanePayload.getCapacity());
+        plane.setAirline(createPlanePayload.getAirline());
+        plane.setStatus(createPlanePayload.getStatus());
         Mockito.when(planeRepo.save(plane)).thenReturn(plane);
-        assertEquals(plane,planeService.addPlane(planePayload));
+        assertEquals(plane,planeService.addPlane(createPlanePayload));
     }
-
-//    void InvalidaddPlane() {
-//        Plane plane= new Plane(30,"Harsh","Working");
-//        Mockito.when(planeRepo.save(plane)).thenReturn(plane);
-//        assertEquals(plane,planeService.addPlane(plane));
-//    }
 
     @Test
     void updatePlane() {
-
-        Plane oldPlane = new Plane(50, "AirIndia","Not Working");
-
-        UpdatePlanePayload updatedPlanePayload = new UpdatePlanePayload(1L, 40, "Akasa", "Working");
-
+        Plane oldPlane= new Plane();
+        oldPlane.setPlaneId(1L);
+        oldPlane.setStatus("working");
+        oldPlane.setCapacity(100);
+        oldPlane.setAirline("Spicejet");
+        UpdatePlanePayload updatedPlanePayload = new UpdatePlanePayload(1L, 50, "AirIndia", "Not Working");
         Plane newPlane = new Plane();
-
         newPlane.setPlaneId(updatedPlanePayload.getPlaneId());
         newPlane.setCapacity(updatedPlanePayload.getCapacity());
         newPlane.setAirline(updatedPlanePayload.getAirline());
         newPlane.setStatus(updatedPlanePayload.getStatus());
-
         Mockito.when(planeRepo.save(newPlane)).thenReturn(newPlane);
-        assertNotEquals(oldPlane, planeService.updatePlane(updatedPlanePayload));
-
+        Mockito.when(planeRepo.findById(updatedPlanePayload.getPlaneId())).thenReturn(Optional.of(oldPlane));
+        assertEquals("Plane details updated", planeService.updatePlane(updatedPlanePayload));
+    }
+    @Test
+    void invalidUpdatePlane() {
+        Plane oldPlane= new Plane();
+        oldPlane.setPlaneId(1L);
+        oldPlane.setStatus("working");
+        oldPlane.setCapacity(100);
+        oldPlane.setAirline("Spicejet");
+        UpdatePlanePayload updatedPlanePayload = new UpdatePlanePayload(1L, 50, "AirIndia", "Not Working");
+        Plane newPlane = new Plane();
+        newPlane.setPlaneId(updatedPlanePayload.getPlaneId());
+        newPlane.setCapacity(updatedPlanePayload.getCapacity());
+        newPlane.setAirline(updatedPlanePayload.getAirline());
+        newPlane.setStatus(updatedPlanePayload.getStatus());
+        Mockito.when(planeRepo.findById(updatedPlanePayload.getPlaneId())).thenReturn(Optional.empty());
+        assertEquals("Plane Not found", planeService.updatePlane(updatedPlanePayload));
     }
 
     @Test
     void setNewPlaneStatus() {
-
-        String status = "Not Working";
-        Long id = 1L;
-
-//        Mockito.when(planeRepo.changePlaneStatus(status, id)).thenReturn();
-//        assertEquals();
-
-
-
+        ChangePlaneStatusPayload changePlaneStatusPayload= new ChangePlaneStatusPayload();
+        changePlaneStatusPayload.setId(1L);
+        changePlaneStatusPayload.setStatus("Not Working");
+        Plane plane= new Plane(100,"Spicejet","Working");
+        plane.setPlaneId(1L);
+        Plane newPlane= new Plane(100,"Spicejet","Not Working");
+        newPlane.setPlaneId(1L);
+        Mockito.when(planeRepo.findById(changePlaneStatusPayload.getId())).thenReturn(Optional.of(plane));
+        assertEquals("Status Changed Successfully",planeService.setNewPlaneStatus(changePlaneStatusPayload.getStatus(),changePlaneStatusPayload.getId()));
+    }
+    @Test
+    void invalidSetNewPlaneStatus() {
+        ChangePlaneStatusPayload changePlaneStatusPayload= new ChangePlaneStatusPayload();
+        changePlaneStatusPayload.setId(1L);
+        changePlaneStatusPayload.setStatus("Not Working");
+        Plane plane= new Plane(100,"Spicejet","Working");
+        plane.setPlaneId(1L);
+        Plane newPlane= new Plane(100,"Spicejet","Not Working");
+        newPlane.setPlaneId(1L);
+        Mockito.when(planeRepo.findById(changePlaneStatusPayload.getId())).thenReturn(Optional.empty());
+        assertEquals("Plane Not Found",planeService.setNewPlaneStatus(changePlaneStatusPayload.getStatus(),changePlaneStatusPayload.getId()));
     }
 }

@@ -5,18 +5,18 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class CreatePlanePayload {
+@NoArgsConstructor
+public class ChangePlaneStatusPayload {
     @NotNull
-    private Integer capacity;
-    @NotBlank
     @NotEmpty
-    @NotNull
-    private String airline;
-    @NotNull
     @NotBlank
-    @NotEmpty
     private String status;
+    @NotNull
+    private Long id;
+
+
 }
